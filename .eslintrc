@@ -1,0 +1,46 @@
+{
+  "env": {
+    "browser": true,
+    "es6": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/eslint-recommended",
+    "plugin:prettier/recommended"
+  ],
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly"
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaFeatures": {
+      "jsx": true
+    },
+    "ecmaVersion": 2020,
+    "sourceType": "module"
+  },
+  "plugins": ["react", "@typescript-eslint"],
+  "rules": {
+    "no-debugger": "off",
+    "import/first": "off",
+    "no-eval": "warn",
+    "no-unused-vars": "warn",
+    "consistent-return": "off",
+    "semi": ["warn", "never"],
+    "quotes": ["warn", "single"],
+    "comma-dangle": ["error", "never"],
+    "prettier/prettier": [
+      1,
+      {
+        "tabWidth": 4,
+        "printWidth": 120,
+        "arrowParens": "always",
+        "singleQuote": true,
+        "endOfLine": "auto",
+        "semi": false,
+        "trailingComma": "none"
+      }
+    ]
+  }
+}
