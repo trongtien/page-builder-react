@@ -1,3 +1,4 @@
+import { Table } from "antd";
 import React from "react";
 
 const SectionTableBuilder = ({component, isBuilder}) => {
@@ -27,7 +28,6 @@ const SectionTableBuilder = ({component, isBuilder}) => {
   return (
     <div className="">
       <h3 className="pb-2 component__title">{component?.component_display}</h3>
-
       <Table
         columns={columns}
         dataSource={data()}

@@ -8,7 +8,7 @@ import {
 } from "@ant-design/icons";
 import { Button, Dropdown } from "antd";
 import { CONFIG_BUILDER } from "../../config/enum/configBuilder.enum";
-import SectionTableBuilder from "../../components/SectionTableBuilder";
+import SectionTableBuilder from "../../components/molecules/node-builder/SectionTableBuilder";
 
 const ResponsiveReactGridLayout = WidthProvider(RGL);
 
@@ -18,6 +18,7 @@ const BuilderContent = ({
   handleConfig,
   onHandleOnDrop,
   handleLayoutChange,
+  onRemoveSection
 }) => {
   const onDrop = (layout, layoutItem, _event) => {
     const componentInfo = JSON.parse(_event.dataTransfer.getData("text/plain"));
@@ -25,14 +26,10 @@ const BuilderContent = ({
   };
 
   const handleDragStop = (layout, oldItem, newItem) => {
-    debugger;
-    console.log("on Drag Stop layout", layout);
-    console.log("on Drag Stop oldItem", oldItem);
-    console.log("on Drag Stop newItem", newItem);
+    
   };
 
   const handleResizeStop = (layout, oldItem, newItem) => {
-    debugger;
     if (oldItem.w !== newItem.w || oldItem.h !== newItem.h) {
       handleLayoutChange(layout);
     }
@@ -107,7 +104,7 @@ const BuilderContent = ({
                   onClick: (e) => {
                     switch (e?.key) {
                       case "0":
-                        handleRemove(component.i);
+                        onRemoveSection(component.i);
                         break;
                       case "1":
                         handleConfig(component.i);

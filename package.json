@@ -11,6 +11,7 @@
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "react-grid-layout": "^1.4.4",
+    "react-router-dom": "^6.26.1",
     "react-scripts": "5.0.1",
     "sass": "^1.77.8",
     "uuid": "^10.0.0",
@@ -22,7 +23,8 @@
     "build": "webpack --config builder/webpack.config.js --env env=prod",
     "build:analyze": "npm run build -- --env addon=bundleanalyze",
     "lint": "eslint ./index.js ./containers/*.js ./components/**/*.js",
-    "lint:fix": "eslint --fix ./index.js ./containers/*.js ./components/**/*.js"
+    "lint:fix": "eslint --fix ./index.js ./containers/*.js ./components/**/*.js",
+    "json:server": "json-server --watch json-server/db.json --port 5000"
   },
   "eslintConfig": {
     "extends": [
@@ -52,6 +54,7 @@
     "css-loader": "^7.1.2",
     "dotenv-webpack": "^8.1.0",
     "html-webpack-plugin": "^5.6.0",
+    "json-server": "^1.0.0-beta.2",
     "postcss": "^8.4.41",
     "postcss-loader": "^8.1.1",
     "postcss-preset-env": "^10.0.0",

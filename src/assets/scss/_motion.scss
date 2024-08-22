@@ -1,0 +1,36 @@
+/*------------------------------------------------------------------------------*/
+
+.fade-in-down {
+    opacity: 0;
+    animation: fade-in-down .2s forwards;
+}
+
+@keyframes fade-in-down {
+    from {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/*------------------------------------------------------------------------------*/
+.fade-out-up {
+    opacity: 1;
+    animation: fade-out-up .2s forwards;
+}
+
+@keyframes fade-out-up {
+    from {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    to {
+        opacity: 0;
+        transform: translateY(-50px);
+    }
+}

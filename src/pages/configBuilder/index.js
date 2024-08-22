@@ -3,6 +3,10 @@ import React, { lazy, Suspense, useState } from "react";
 import BuilderLayout from "./BuilderLayout";
 import BuilderContentLoading from "./BuilderContentLoading";
 import { v4 as uuidv4 } from "uuid";
+import { ConfigModal } from "../../components/atoms/modals/ConfigModal";
+import useModal from "../../hooks/useModal";
+import { DIALOG_MODAL } from "../../config/enum/dialogModal.enum";
+
 const LazyBuilderContent = lazy(() => import("./BuilderContent"));
 
 const defaultValue = (screen_id, component_type, location) => {
@@ -15,7 +19,7 @@ const defaultValue = (screen_id, component_type, location) => {
     location_y: location.y,
     width: location.w,
     height: location.h,
-    table_column_list: "",
+    table_column_list: [],
     api_url: "",
     api_method: "GET", //GET/POST
     api_authen_type: "bearer_token", //"bearer_token", "basic_auth", "no_auth"
@@ -42,9 +46,10 @@ const modelGrid = (item) => {
 };
 
 const ConfigBuilder = () => {
+  const { openModal } = useModal();
   const screen_id = uuidv4();
-  
-  // Data layout 
+
+  // Data layout
   const [layouts, updateLayouts] = useState([]);
   const [screenData, updateScreenData] = useState({
     list: {},
@@ -64,17 +69,18 @@ const ConfigBuilder = () => {
       ...data,
     };
 
+    // update state
     handlingConvertData([MOCK_RESPONSE_CREATE_SUCCESS]);
   };
 
   const handlingConvertData = (data) => {
     let listObject = {};
-    let layout = []
+    let layout = [];
 
     for (let i = 0; i < data.length; i++) {
       const component = data[i];
-      
-      layout.push(modelGrid(component))
+
+      layout.push(modelGrid(component));
       listObject[component._id] = component;
     }
 
@@ -84,7 +90,35 @@ const ConfigBuilder = () => {
     }));
 
     // Update layout data react grid
-    updateLayouts(state => [...state, ...layout])
+    updateLayouts((state) => [...state, ...layout]);
+  };
+
+  /**
+   * @param {*} sectionId id section component
+   */
+  const handleRemoveSection = (sectionId) => {
+    // Show confirm
+    const deleteConfirm = ConfigModal({
+      title: "Xác nhận component",
+      width: "500px",
+      type: DIALOG_MODAL.MODAL_TYPE.CONFIRM,
+      onHandleConfirm: () => {
+        // Accept -> call api -> show message
+
+        // update data state
+        const stateLayouts = [...layouts];
+        const indexRemove = stateLayouts.findIndex((e) => e.i === sectionId);
+        if (indexRemove === -1) {
+          console.error(`Can not find index remove section`);
+          return;
+        }
+
+        stateLayouts.splice(indexRemove, 1);
+        updateLayouts(stateLayouts);
+      },
+    });
+
+    openModal(deleteConfirm);
   };
 
   return (
@@ -94,6 +128,7 @@ const ConfigBuilder = () => {
           layouts={layouts}
           data={screenData.list}
           onHandleOnDrop={handleOnDrop}
+          onRemoveSection={handleRemoveSection}
         />
       </Suspense>
     </BuilderLayout>

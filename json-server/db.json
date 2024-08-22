@@ -1,0 +1,28 @@
+{
+  "screen_page": [
+    {
+      "id": "asdsadsad",
+      "name": "asdads",
+      "decryption": "",
+      "path": "/viet-tin-bank"
+    }
+  ],
+
+  "companies": [
+    {
+      "id": 1,
+      "name": "Romaguera-Crona",
+      "catchPhrase": "Multi-layered client-server neural-net"
+    },
+    {
+      "id": 2,
+      "name": "Deckow-Crist",
+      "catchPhrase": "Proactive didactic contingency"
+    },
+    {
+      "id": 3,
+      "name": "Keebler LLC",
+      "catchPhrase": "User-centric fault-tolerant solution"
+    }
+  ]
+}
