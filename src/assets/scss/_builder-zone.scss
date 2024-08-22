@@ -1,0 +1,224 @@
+#content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+
+    .table__component {
+        thead {
+            position: sticky;
+            top: 30px;
+            z-index: 99;
+
+            tr {
+                th {
+                    padding: 0.5rem;
+                }
+            }
+        }
+
+        tbody {
+            tr {
+                td {
+                    padding: 0.5rem;
+                }
+            }
+        }
+    }
+}
+
+.layout__item-wrapper {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    overflow: auto;
+
+    .component__title {
+        position: sticky;
+        top: 0;
+        z-index: 100;
+        color: #1C9292;
+        background: #fff;
+    }
+
+    .content__tab {
+        .component__title {
+            top: 45px;
+        }
+
+        thead {
+            position: sticky;
+            top: 75px !important;
+            z-index: 99;
+        }
+    }
+
+    .ant-tabs {
+
+        position: sticky;
+        top: 0;
+        z-index: 99;
+        background-color: #fff;
+
+        .ant-tabs-nav {
+            margin-bottom: 0 !important;
+        }
+    }
+
+    .builder-tab {
+        flex: 1;
+        overflow-y: auto;
+
+        &::-webkit-scrollbar {
+            width: 8px;
+            height: 8px;
+            background-color: #F5F5F5;
+        }
+
+        &::-webkit-scrollbar-thumb {
+            border-radius: 10px;
+            -webkit-box-shadow: inset 0 0 6px rgba(#1C9292, .3);
+            background-color: #1C9292;
+        }
+
+        &__content {
+            position: relative;
+
+            .edit-btn {
+                position: sticky;
+                top: 45px;
+                float: right;
+                z-index: 1001;
+            }
+
+        }
+    }
+
+    &--detail {
+        &__item {
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            line-height: 1.25;
+            margin-bottom: 0.5rem;
+
+            .label {
+                color: rgb(116, 115, 115);
+            }
+
+            .value {
+                font-weight: 500;
+            }
+        }
+
+    }
+}
+
+.draggable-toolbox {
+    background-color: #dfd;
+    width: 100%;
+    padding: 20px;
+}
+
+.react-grid-layout.layout {
+    background: #f4f4f4;
+    flex: 1;
+    overflow-y: auto;
+
+}
+
+.layoutJSON {
+    background: #ddd;
+    border: 1px solid black;
+    margin-top: 10px;
+    padding: 10px;
+}
+
+.columns {
+    -moz-columns: 120px;
+    -webkit-columns: 120px;
+    columns: 120px;
+}
+
+.react-grid-item {
+    box-sizing: border-box;
+}
+
+.react-grid-item:not(.react-grid-placeholder) {
+    background: #fff;
+    border-radius: 4px;
+    @include boxShadow(3);
+    padding: 12px;
+}
+
+.react-grid-item.resizing {
+    opacity: 0.9;
+}
+
+.react-grid-item.static {
+    background: #cce;
+}
+
+.react-grid-item .minMax {
+    font-size: 12px;
+}
+
+.react-grid-item .add {
+    cursor: pointer;
+}
+
+.react-grid-dragHandleExample {
+    cursor: move;
+    /* fallback if grab cursor is unsupported */
+    cursor: grab;
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
+}
+
+.toolbox {
+    background-color: #dfd;
+    width: 100%;
+    height: 120px;
+    overflow: scroll;
+}
+
+.hide-button {
+    cursor: pointer;
+    position: absolute;
+    // font-size: 20px;
+    top: 5px;
+    right: 5px;
+    z-index: 500;
+    /* padding: 10px; */
+}
+
+.toolbox__title {
+    font-size: 24px;
+    margin-bottom: 5px;
+}
+
+.toolbox__items {
+    display: block;
+}
+
+.toolbox__items__item {
+    display: inline-block;
+    text-align: center;
+    line-height: 40px;
+    cursor: pointer;
+    width: 40px;
+    height: 40px;
+    padding: 10px;
+    margin: 5px;
+    border: 1px solid black;
+    background-color: #ddd;
+}
+
+.droppable-element {
+    width: 150px;
+    text-align: center;
+    background: #fdd;
+    border: 1px solid black;
+    margin: 10px 0;
+    padding: 10px;
+}

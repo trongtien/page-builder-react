@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react";
 import { DIALOG_MODAL } from "../../../config/enum/dialogModal.enum";
 
 /**
@@ -7,18 +7,29 @@ import { DIALOG_MODAL } from "../../../config/enum/dialogModal.enum";
  * @returns
  */
 export function ConfigModal(param) {
-  const defaultTitle = param?.title ? "Title modal" : param?.title;
-  const defaultWidth = param?.width ? "520px" : param?.width;
+  const defaultTitle = param?.title ? param?.title : "Title modal";
+  const defaultWidth = param?.width ? param?.width : "520px";
   const defaultContent = param?.content ? param?.content : null;
-  const defaultData = param?.dataPropsComponent ? param?.dataPropsComponent : null;
-  const defaultNodeComponentCustom = param?.nodeComponentCustom ? param?.nodeComponentCustom : <span>Node Component custom change field param nodeComponentCustom</span>;
-  const defaultTypeModal = param?.type ? param?.type : DIALOG_MODAL.MODAL_TYPE.CUSTOM;
+  
+  const defaultData = param?.dataPropsComponent
+    ? param?.dataPropsComponent
+    : null;
+
+  const defaultNodeComponentCustom = param?.nodeComponentCustom ? (
+    param?.nodeComponentCustom
+  ) : (
+    <span>Node Component custom change field param nodeComponentCustom</span>
+  );
+
+  const defaultTypeModal = param?.type
+    ? param?.type
+    : DIALOG_MODAL.MODAL_TYPE.CUSTOM;
 
   const defaultOnHandleClose = param?.onHandleClose
     ? param?.onHandleClose
     : () => {};
-  
-    const defaultOnHandleConfirm = param?.onHandleConfirm
+
+  const defaultOnHandleConfirm = param?.onHandleConfirm
     ? () => param?.onHandleConfirm
     : () => {};
 

@@ -1,13 +1,60 @@
-import "./style.scss";
+import "/node_modules/react-grid-layout/css/styles.css";
+import "/node_modules/react-resizable/css/styles.css";
 import React, { lazy, Suspense, useState } from "react";
 import BuilderLayout from "./BuilderLayout";
-import BuilderContentLoading from "./BuilderContentLoading";
 import { v4 as uuidv4 } from "uuid";
 import { ConfigModal } from "../../components/atoms/modals/ConfigModal";
 import useModal from "../../hooks/useModal";
 import { DIALOG_MODAL } from "../../config/enum/dialogModal.enum";
+import BuilderContentLoading from "../../components/molecules/BuilderContentLoading";
+import ModalConfigBuilder from "../../components/molecules/ModalConfigBuilder";
 
 const LazyBuilderContent = lazy(() => import("./BuilderContent"));
+
+// * title_x
+// * field_title_y
+// * chart_data_set {
+// *  label,
+// *  field_get_data
+// *  borderColor,
+// *  backgroundColor
+// * }
+
+const MOCK_CONFIG_DATA_CHART_LINE = {
+  title_x: "Ngày",
+  field_mapping_title_y: "hour",
+  chart_data_set: [
+    {
+      label: "Chạy thành công",
+      field_get_data: "countSuccess",
+      borderColor: "rgb(53, 162, 235)",
+      backgroundColor: "rgba(53, 162, 235, 0.5)",
+      yAxisID: "y",
+    },
+    {
+      label: "Chạy thất bại",
+      field_get_data: "countFail",
+      borderColor: "rgb(255, 99, 132)",
+      backgroundColor: "rgba(255, 99, 132, 0.5)",
+      yAxisID: "y",
+    },
+  ],
+};
+
+const MOCK_CONFIG_DATA_CHART_DOUGHNUT = [
+  {
+    label: "Thành công",
+    field_mapping: "countSuccess",
+    backgroundColor: "#98cff4",
+    borderColor: "#98cff4",
+  },
+  {
+    label: "Thất bại",
+    field_mapping: "countFail",
+    backgroundColor: "#ff7592",
+    borderColor: "#ff7592",
+  },
+];
 
 const defaultValue = (screen_id, component_type, location) => {
   return {
@@ -20,6 +67,8 @@ const defaultValue = (screen_id, component_type, location) => {
     width: location.w,
     height: location.h,
     table_column_list: [],
+    chart_line_config: MOCK_CONFIG_DATA_CHART_LINE,
+    chart_doughnut_config: MOCK_CONFIG_DATA_CHART_DOUGHNUT,
     api_url: "",
     api_method: "GET", //GET/POST
     api_authen_type: "bearer_token", //"bearer_token", "basic_auth", "no_auth"
@@ -55,6 +104,40 @@ const ConfigBuilder = () => {
     list: {},
     total: 0,
   });
+
+  const handleChangeLayout = (layouts) => {
+    // Call Api update
+
+    // update state
+    let screenState = screenData;
+    let layoutState = layouts;
+    for (const layout of layouts) {
+      const indexLayoutState = layoutState.findIndex((e) => e.i === layout.i);
+      if (indexLayoutState !== -1) {
+        layoutState[indexLayoutState] = {
+          ...layoutState[indexLayoutState],
+          h: layout.h,
+          i: layout.i,
+          x: layout.x,
+          y: layout.y,
+          w: layout.w,
+        };
+      }
+
+      if (screenState.list?.[layout.i]) {
+        screenState.list[layout.i] = {
+          ...screenState.list[layout.i],
+          location_x: layout.x,
+          location_y: layout.y,
+          height: layout.h,
+          width: layout.w,
+        };
+      }
+    }
+
+    updateLayouts(layoutState);
+    updateScreenData(screenState);
+  };
 
   const handleOnDrop = (_, layoutInfo, component_type) => {
     const valueAddSection = defaultValue(screen_id, component_type, layoutInfo);
@@ -100,7 +183,7 @@ const ConfigBuilder = () => {
     // Show confirm
     const deleteConfirm = ConfigModal({
       title: "Xác nhận component",
-      width: "500px",
+      width: 1000,
       type: DIALOG_MODAL.MODAL_TYPE.CONFIRM,
       onHandleConfirm: () => {
         // Accept -> call api -> show message
@@ -121,6 +204,21 @@ const ConfigBuilder = () => {
     openModal(deleteConfirm);
   };
 
+  const handleConfigSection = (sectionId) => {
+    const deleteConfirm = ConfigModal({
+      title: "Cập nhật component",
+      width: "1500px",
+      type: DIALOG_MODAL.MODAL_TYPE.CUSTOM,
+      dataPropsComponent: {
+        sectionId: sectionId,
+      },
+      nodeComponentCustom: <ModalConfigBuilder />,
+      onHandleConfirm: () => {},
+    });
+
+    openModal(deleteConfirm);
+  };
+
   return (
     <BuilderLayout>
       <Suspense fallback={<BuilderContentLoading />}>
@@ -128,7 +226,9 @@ const ConfigBuilder = () => {
           layouts={layouts}
           data={screenData.list}
           onHandleOnDrop={handleOnDrop}
+          onHandleConfig={handleConfigSection}
           onRemoveSection={handleRemoveSection}
+          onChangeLayout={handleChangeLayout}
         />
       </Suspense>
     </BuilderLayout>

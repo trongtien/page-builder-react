@@ -15,6 +15,14 @@ const BuilderLayout = ({ children }) => {
   const layoutInfo = useMemo(() => {
     return [
       {
+        component_type: CONFIG_BUILDER.COMPONENT_TYPE.DOUGHNUT_CHART,
+        label: "Chart Doughnut",
+      },
+      {
+        component_type: CONFIG_BUILDER.COMPONENT_TYPE.CHART_LINE,
+        label: "Chart line",
+      },
+      {
         component_type: CONFIG_BUILDER.COMPONENT_TYPE.TAB,
         label: "Multiple Tabs",
       },
@@ -67,6 +75,8 @@ const BuilderLayout = ({ children }) => {
                       [CONFIG_BUILDER.COMPONENT_TYPE.DETAIL]: (
                         <ProfileOutlined style={{ fontSize: "24px" }} />
                       ),
+                      [CONFIG_BUILDER.COMPONENT_TYPE.CHART_LINE]: <TabsIcon />,
+                      [CONFIG_BUILDER.COMPONENT_TYPE.DOUGHNUT_CHART]: <TabsIcon />,
                     }[layout.component_type]
                   }
                 </div>

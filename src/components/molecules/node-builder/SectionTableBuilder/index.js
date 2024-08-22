@@ -1,7 +1,8 @@
-import { Table } from "antd";
+import { Empty, Table } from "antd";
 import React from "react";
+import EmptyCustom from "../EmptyCustom";
 
-const SectionTableBuilder = ({component, isBuilder}) => {
+const SectionTableBuilder = ({ component, isBuilder }) => {
   const columns = component?.table_column_list?.map((item) => {
     return {
       title: item?.column_label,
@@ -24,6 +25,20 @@ const SectionTableBuilder = ({component, isBuilder}) => {
 
     return list;
   };
+
+  if (columns.length === 0 && isBuilder) {
+    return (
+      <div className="h-40">
+        <h3 className="pb-2 component__title">
+          {component?.component_display?.length === 0
+            ? "---"
+            : component?.component_display}
+        </h3>
+        
+        <EmptyCustom />
+      </div>
+    );
+  }
 
   return (
     <div className="">
